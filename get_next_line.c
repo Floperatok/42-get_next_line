@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nsalles <nsalles@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nsalles <nsalles@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:48:58 by nsalles           #+#    #+#             */
-/*   Updated: 2023/10/22 12:13:36 by nsalles          ###   ########.fr       */
+/*   Updated: 2024/02/12 03:45:19 by nsalles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+/*
+ *	Search in buf for a '\n' and returns the position of the first one
+ * 	encountered. Returns -1 if no '\n' are found.
+*/
 int	found_newline(char *buf)
 {
 	int	i;
 
 	i = -1;
 	if (!buf)
-		return (i);
+		return (-1);
 	while (buf[++i])
 	{
 		if (buf[i] == '\n')
@@ -27,6 +31,11 @@ int	found_newline(char *buf)
 	return (-1);
 }
 
+/*
+ *	Seach in the stash for a '\n' and cleans everything before it then 
+ *	returns the cleaned stash.
+ *	Returns NULL if no '\n' are found.
+*/
 char	*clean_stash(char *stash)
 {
 	char	*res;
@@ -53,6 +62,10 @@ char	*clean_stash(char *stash)
 	return (res);
 }
 
+/*
+ *	Read the stash and substract only one line to it and returns it.
+ *	Returns NULL if stash is empty.
+*/
 char	*extract_line(char *stash)
 {
 	char	*line;
@@ -82,6 +95,11 @@ char	*extract_line(char *stash)
 	return (line);
 }
 
+/*
+ *	Read a line in the file on the given file descriptor, appends it to the
+ *	the stash and returns it. Returns NULL if there is nothing to read or 
+ *	errors.
+*/
 char	*read_file(int fd, char *stash)
 {
 	char	*buf;
@@ -110,6 +128,13 @@ char	*read_file(int fd, char *stash)
 	return (stash);
 }
 
+/*
+ *	Reads line by line the file on the given file descriptor.
+ *	Reads BUFFER_SIZE bytes at the time.
+ *	Returns the readed line that can be freed, returns NULL if no line is found,
+ * 	if the file descriptor is negative or in case of errors.
+ * 	Can only be used on one file at the time.
+*/
 char	*get_next_line(int fd)
 {
 	static char	*stash;
