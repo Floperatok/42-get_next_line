@@ -6,7 +6,7 @@
 /*   By: nsalles <nsalles@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 18:48:58 by nsalles           #+#    #+#             */
-/*   Updated: 2024/03/22 17:08:29 by nsalles          ###   ########.fr       */
+/*   Updated: 2024/03/22 23:25:28 by nsalles          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (free(stash), NULL);
+		return (free(stash), stash = NULL);
 	if (!stash)
 		stash = ft_strdup("");
 	stash = read_file(fd, stash);
